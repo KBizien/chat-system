@@ -1,24 +1,61 @@
-var app = require('express')();
+/*
+ * Init
+ */
+
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+
+/*
+ * Routes
+ */
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 });
 
-io.on('connection', function(socket){
-  console.log('A user logged in');
-  io.emit('chat message', 'A user logged in');
 
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+/*
+ * Chatroom
+ */
+
+// usernames which are currently connected to the chat
+var usernames = {};
+var numUsers = 0;
+
+io.on('connection', function(socket) {
+  var addedUser = false;
+
+  // when the client emits 'add user', this listens and executes
+  socket.on('add user', function (username) {
+    // we store the username in the socket session for this client
+    socket.username = username;
+    // add the client's username to the global list
+    usernames[username] = username;
+    ++numUsers;
+    addedUser = true;
+    socket.emit('login', {
+      numUsers: numUsers
+    });
+    // echo globally (all clients) that a person has connected
+    socket.broadcast.emit('user joined', {
+      username: socket.username,
+      numUsers: numUsers
+    });
   });
 
-  socket.on('disconnect', function(){
-    io.emit('chat message', 'A user logged out');
-    console.log('A user logged out');
+  socket.on('chat message', function(message){
+    io.emit('chat message', {username: socket.username, message: message});
   });
+
 });
+
+
+/*
+ * Server port
+ */
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
