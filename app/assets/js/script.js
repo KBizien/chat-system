@@ -54,24 +54,19 @@ function cleanInput(input) {
 }
 
 // Log a message
-function log(message) {
-  var $logInfo = $('<li>').text(message);
-  displayMessage($logInfo);
-}
-
-// Add a log information to the chat
-function displayMessage(message) {
-  var $message = $(message);
-
-  $messages.append($message);
-  $messages[0].scrollTop = $messages[0].scrollHeight;
+function log(message, options) {
+  if (options.title) {
+    var $logInfo = $('<li>').addClass('log log--title').text(message);
+  }
+  else {
+    var $logInfo = $('<li>').addClass('log').text(message);
+  }
+  displayMessage($logInfo, options);
 }
 
 // Sends a chat message
 function sendMessage() {
-  var message = $inputMessage.val();
-  // Prevent markup from being injected into the message
-  message = cleanInput(message);
+  var message = cleanInput($inputMessage.val());
   // if there is a non-empty message and a socket connection
   if (message && connected) {
     $inputMessage.val('');
@@ -81,16 +76,48 @@ function sendMessage() {
 }
 
 // Adds the visual chat message to the message list
-function addChatMessage(data) {
+function addChatMessage(data, options) {
   // Don't display the message if 'X was typing' already exists
   var $typingMessages = getTypingMessages(data);
+  options = options || {};
   if ($typingMessages.length !== 0) {
     $typingMessages.remove();
   }
 
+  var $usernameDiv = $('<span class="message__username"/>')
+    .text(data.username);
+
+  var $messageBodyDiv = $('<span class="message__body">')
+    .text(data.message);
+
   var typingClass = data.typing ? 'typing' : '';
-  var $message = $('<li class="message"/>').data('username', data.username).addClass(typingClass).text(data.username + ':' + data.message);
-  displayMessage($message);
+  var $message = $('<li class="message"/>')
+    .data('username', data.username)
+    .addClass(typingClass)
+    .append($usernameDiv, $messageBodyDiv);
+
+  displayMessage($message, options);
+}
+
+// Add a log information to the chat
+function displayMessage(message, options) {
+  var $message = $(message);
+
+  // Setup default options
+  if (!options) {
+    options = {};
+  }
+  if (typeof options.prepend === 'undefined') {
+    options.prepend = false;
+  }
+
+  if (options.prepend) {
+    $messages.prepend($message);
+  }
+  else {
+    $messages.append($message);
+  }
+  $messages[0].scrollTop = $messages[0].scrollHeight;
 }
 
 // Updates the typing event
@@ -188,16 +215,16 @@ $('.login-submit').click(function(){
 socket.on('login', function(data) {
   connected = true;
   // Display the welcome message
-  var message = "Welcome to Socket.IO Chat – ";
-  log(message);
+  var message = "Chat ma gueule ! Wesh";
+  log(message, {title: true, prepend: true});
 });
 
 // Whenever the server emits 'user joined', log it in the chat body
 socket.on('user joined', function(data) {
-  log(data.username + ' joined');
+  log(data.username + ' joined the chat', {title: false});
 });
 
-socket.on('chat message', function(data){
+socket.on('chat message', function(data) {
   addChatMessage(data);
 });
 
@@ -213,5 +240,5 @@ socket.on('stop typing', function(data) {
 
  // Whenever the server emits 'user left', log it in the chat body
 socket.on('user left', function(data) {
-  log(data.username + ' left');
+  log(data.username + ' left the chat', {title: false});
 });

@@ -6,7 +6,7 @@
 html,
 body {
   height: 100%;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .page {
@@ -38,8 +38,24 @@ body {
   font-size: 1em;
   cursor: pointer;
 }
+
+/* chat room */
+
 .chat.page {
   display: none;
+}
+.log {
+  color: gray;
+  font-size: .75em;
+  margin: 5px;
+  font-style: italic;
+}
+.log--title {
+  text-align: center;
+  font-style: normal;
+  font-size: 1.5em;
+  color: #212121;
+  font-weight: bold;
 }
 .messages {
   overflow-y: scroll;
@@ -50,11 +66,16 @@ body {
 .messages li {
   padding: 5px 10px;
 }
-.messages li:nth-child(odd) {
-  background: #eee;
+.message__username {
+  font-style: italic;
+  color: #2854A5;
+  font-weight: bold;
+  margin-right: .5em;
 }
 .inputMessage {
-  background: #000;
+  border: 3px solid #212121;
+  height: 60px;
+  font-size: 2em;
   padding: 10px;
   position: fixed;
   bottom: 0;
