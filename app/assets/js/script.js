@@ -140,11 +140,11 @@ function updateUsersWhoAreTyping(data) {
       var $messageBodyDiv = usersTyping.toString() + ' is typing';
       var $message = $('<li class="message"/>')
         .append($messageBodyDiv);
-      displayUsersWhoAreTyping($message);;
+      displayUsersWhoAreTyping($message);
       break;
 
     case usersTyping.length > 1:
-      var $messageBodyDiv = usersTyping.toString() + ' are typing';
+      var $messageBodyDiv = usersTyping.join(' and ') + ' are typing';
       var $message = $('<li class="message"/>')
         .append($messageBodyDiv);
       displayUsersWhoAreTyping($message);
