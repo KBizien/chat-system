@@ -6,10 +6,40 @@
 html,
 body {
   height: 100%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.page {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+/* login */
+.login.page {
+  text-align: center;
+}
+.login .title {
+  margin: 1em 0;
+  font-size: 3em;
+}
+.usernameInput {
+  width: 50%;
+  height: 50px;
+  font-size: 2em;
+  vertical-align: bottom;
+}
+.login .login-submit {
+  vertical-align: bottom;
+  background-color: #212121;
+  border: none;
+  padding: 1em 2em;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
 }
 .chat.page {
   display: none;
-  height: 100%;
 }
 .messages {
   overflow-y: scroll;

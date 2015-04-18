@@ -171,6 +171,14 @@ $window.keydown(function(event) {
   }
 });
 
+$('.login-submit').click(function(){
+  if (username) {
+    sendMessage();
+  } else {
+    setUsername();
+  }
+});
+
 
 /*
  * Socket events
