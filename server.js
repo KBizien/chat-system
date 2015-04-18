@@ -12,10 +12,10 @@ var io = require('socket.io')(http);
  * Routes
  */
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/views/index.html');
-});
-
+// app.get('/', function(req, res){
+//   res.sendFile(__dirname + '/app/views/index.html');
+// });
+app.use(express.static(__dirname + '/views'));
 
 /*
  * Chatroom
