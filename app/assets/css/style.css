@@ -23,7 +23,7 @@ body {
   margin: 1em 0;
   font-size: 3em;
 }
-.usernameInput {
+.username-input {
   width: 50%;
   height: 50px;
   font-size: 2em;
@@ -82,7 +82,7 @@ body {
   font-weight: bold;
   margin-right: .5em;
 }
-.inputMessage {
+.input-message {
   border: 3px solid #212121;
   height: 60px;
   font-size: 2em;

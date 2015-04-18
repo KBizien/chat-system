@@ -2,7 +2,7 @@
  * Constantes
  */
 
-var TYPING_TIMER_LENGTH = 1200; // ms
+var TYPING_TIMER_LENGTH = 1000; // ms
 
 
 /*
@@ -12,8 +12,8 @@ var TYPING_TIMER_LENGTH = 1200; // ms
 var $window = $(window);
 var $messages = $('.messages'); // Messages area
 var $typingAction = $('.typing-action'); // Typing area
-var $usernameInput = $('.usernameInput'); // Input for username
-var $inputMessage = $('.inputMessage'); // Input message input box
+var $usernameInput = $('.username-input'); // Input for username
+var $inputMessage = $('.input-message'); // Input message input box
 var $loginPage = $('.login.page'); // The login page
 var $chatPage = $('.chat.page'); // The chatroom page
 
@@ -186,7 +186,6 @@ $inputMessage.on('input', function() {
 });
 
 // Keyboard events
-
 $window.keydown(function(event) {
   // Auto-focus the current input when a key is typed
   if (!(event.ctrlKey || event.metaKey || event.altKey)) {
@@ -202,12 +201,9 @@ $window.keydown(function(event) {
   }
 });
 
+// handler on submit login button
 $('.login-submit').click(function(){
-  if (username) {
-    sendMessage();
-  } else {
     setUsername();
-  }
 });
 
 
