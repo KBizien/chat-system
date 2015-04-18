@@ -4,8 +4,7 @@
   "description": "simple real-time chat system",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "nodemon": "nodemon server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

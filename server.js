@@ -4,9 +4,14 @@
 
 var express = require('express');
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
+app.set('port', (process.env.PORT || 3000));
+
+var server = app.listen(app.get('port'), function() {
+  console.log('Express server listening on port ' + server.address().port);
+});
+
+var io = require('socket.io')(server);
 
 /*
  * Routes
@@ -82,13 +87,4 @@ io.on('connection', function(socket) {
     }
   });
 
-});
-
-
-/*
- * Server port
- */
-
-http.listen(3000, function(){
-  console.log('listening on *:3000');
 });
