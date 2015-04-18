@@ -1,6 +1,14 @@
 /*
+ * Constantes
+ */
+
+var TYPING_TIMER_LENGTH = 1200; // ms
+
+
+/*
  * Variables
  */
+
 var $window = $(window);
 var $messages = $('.messages'); // Messages area
 var $usernameInput = $('.usernameInput'); // Input for username
@@ -11,16 +19,21 @@ var $chatPage = $('.chat.page'); // The chatroom page
 // Prompt for setting a username
 var username;
 var connected = false;
+
+var typing = false;
+var lastTypingTime;
+
 var $currentInput = $usernameInput.focus();
 
 var socket = io();
+
 
 /*
  * Functions
  */
 
  // Sets the client's username
-function setUsername () {
+function setUsername() {
   username = cleanInput($usernameInput.val().trim());
 
   // If the username is valid
@@ -36,7 +49,7 @@ function setUsername () {
 }
 
 // Prevents input from having injected markup
-function cleanInput (input) {
+function cleanInput(input) {
   return $('<div/>').text(input).text();
 }
 
@@ -66,7 +79,7 @@ function displayMessage(message) {
 }
 
 // Sends a chat message
-function sendMessage () {
+function sendMessage() {
   var message = $inputMessage.val();
   // Prevent markup from being injected into the message
   message = cleanInput(message);
@@ -79,28 +92,82 @@ function sendMessage () {
 }
 
 // Adds the visual chat message to the message list
-function addChatMessage (data) {
-  var $message = $('<li>').text(data.username + ':' + data.message);
+function addChatMessage(data) {
+  // Don't display the message if 'X was typing' already exists
+  var $typingMessages = getTypingMessages(data);
+  if ($typingMessages.length !== 0) {
+    $typingMessages.remove();
+  }
+
+  var typingClass = data.typing ? 'typing' : '';
+  var $message = $('<li class="message"/>').data('username', data.username).addClass(typingClass).text(data.username + ':' + data.message);
   displayMessage($message);
 }
+
+// Updates the typing event
+function updateTyping() {
+  if (connected) {
+    if (!typing) {
+      typing = true;
+      socket.emit('typing');
+    }
+    lastTypingTime = (new Date()).getTime();
+
+    setTimeout(function () {
+      var typingTimer = (new Date()).getTime();
+      var timeDiff = typingTimer - lastTypingTime;
+      if (timeDiff >= TYPING_TIMER_LENGTH && typing) {
+        socket.emit('stop typing');
+        typing = false;
+      }
+    }, TYPING_TIMER_LENGTH);
+  }
+}
+
+// Adds the visual chat typing message
+function addChatTyping(data) {
+  data.typing = true;
+  data.message = 'is typing';
+  addChatMessage(data);
+}
+
+// Removes the visual chat typing message
+function removeChatTyping(data) {
+  getTypingMessages(data).fadeOut(function () {
+    $(this).remove();
+  });
+}
+
+// Gets the 'X is typing' messages of a user
+function getTypingMessages(data) {
+  return $('.typing.message').filter(function (i) {
+    return $(this).data('username') === data.username;
+  });
+}
+
 
 /*
  * Events
  */
 
 // Focus input when clicking anywhere on login page
-$loginPage.click(function () {
+$loginPage.click(function() {
   $currentInput.focus();
 });
 
 // Focus input when clicking on the message input's border
-$inputMessage.click(function () {
+$inputMessage.click(function() {
   $inputMessage.focus();
+});
+
+// Handler on inputMessage - if someone is typing
+$inputMessage.on('input', function() {
+  updateTyping();
 });
 
 // Keyboard events
 
-$window.keydown(function (event) {
+$window.keydown(function(event) {
   // Auto-focus the current input when a key is typed
   if (!(event.ctrlKey || event.metaKey || event.altKey)) {
     $currentInput.focus();
@@ -114,6 +181,7 @@ $window.keydown(function (event) {
     }
   }
 });
+
 
 /*
  * Socket events
@@ -138,8 +206,18 @@ socket.on('chat message', function(data){
   addChatMessage(data);
 });
 
+// Whenever the server emits 'typing', show the typing message
+socket.on('typing', function(data) {
+  addChatTyping(data);
+});
+
+// Whenever the server emits 'stop typing', kill the typing message
+socket.on('stop typing', function(data) {
+  removeChatTyping(data);
+});
+
  // Whenever the server emits 'user left', log it in the chat body
-socket.on('user left', function (data) {
+socket.on('user left', function(data) {
   log(data.username + ' left');
   addParticipantsMessage(data);
 });
