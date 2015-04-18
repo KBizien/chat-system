@@ -27,6 +27,7 @@ app.get('/', function(req, res){
 
 // usernames which are currently connected to the chat
 var usernames = {};
+var usersTyping = [];
 
 io.on('connection', function(socket) {
   var addedUser = false;
@@ -54,15 +55,17 @@ io.on('connection', function(socket) {
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function() {
+    usersTyping.push(socket.username);
     socket.broadcast.emit('typing', {
-      username: socket.username
+      usersTyping: usersTyping
     });
   });
 
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function() {
+    usersTyping.splice(socket.username);
     socket.broadcast.emit('stop typing', {
-      username: socket.username
+      usersTyping: usersTyping
     });
   });
 

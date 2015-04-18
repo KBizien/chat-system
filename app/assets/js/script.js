@@ -73,34 +73,19 @@ function sendMessage() {
     $inputMessage.val('');
     // tell server to execute 'new message' and send along one parameter
     socket.emit('chat message', message);
+    socket.emit('stop typing');
+    typing = false;
   }
 }
 
 // Adds the visual chat message to the message list
 function addChatMessage(data, options) {
-  // Don't display the message if 'X was typing' already exists
-  var $typingMessages = getTypingMessages(data);
-  options = options || {};
-  if ($typingMessages.length !== 0) {
-    $typingMessages.remove();
-  }
-
-  if (data.typing) {
-    options.typing = true;
-  }
-
   var $usernameDiv = $('<span class="message__username"/>')
     .text(data.username);
-
   var $messageBodyDiv = $('<span class="message__body">')
     .text(data.message);
-
-  var typingClass = data.typing ? 'typing' : '';
   var $message = $('<li class="message"/>')
-    .data('username', data.username)
-    .addClass(typingClass)
     .append($usernameDiv, $messageBodyDiv);
-
   displayMessage($message, options);
 }
 
@@ -119,14 +104,12 @@ function displayMessage(message, options) {
   if (options.prepend) {
     $messages.prepend($message);
   }
-  else if (options.typing) {
-    $typingAction.append($message);
-  }
   else {
     $messages.append($message);
   }
   $messages[0].scrollTop = $messages[0].scrollHeight;
 }
+
 
 // Updates the typing event
 function updateTyping() {
@@ -148,25 +131,38 @@ function updateTyping() {
   }
 }
 
-// Adds the visual chat typing message
-function addChatTyping(data) {
-  data.typing = true;
-  data.message = 'is typing';
-  addChatMessage(data);
+// update users who are typing
+function updateUsersWhoAreTyping(data) {
+  var usersTyping = data.usersTyping;
+  switch (true) {
+
+    case usersTyping.length == 1:
+      var $messageBodyDiv = usersTyping.toString() + ' is typing';
+      var $message = $('<li class="message"/>')
+        .append($messageBodyDiv);
+      displayUsersWhoAreTyping($message);;
+      break;
+
+    case usersTyping.length > 1:
+      var $messageBodyDiv = usersTyping.toString() + ' are typing';
+      var $message = $('<li class="message"/>')
+        .append($messageBodyDiv);
+      displayUsersWhoAreTyping($message);
+      break;
+
+    default:
+      var $messageBodyDiv = '';
+      var $message = $('<li class="message"/>')
+        .append($messageBodyDiv);
+      displayUsersWhoAreTyping($message);
+  }
 }
 
-// Removes the visual chat typing message
-function removeChatTyping(data) {
-  getTypingMessages(data).fadeOut(function () {
-    $(this).remove();
-  });
-}
-
-// Gets the 'X is typing' messages of a user
-function getTypingMessages(data) {
-  return $('.typing.message').filter(function (i) {
-    return $(this).data('username') === data.username;
-  });
+// display users who are typing
+function displayUsersWhoAreTyping(message) {
+  var $message = $(message);
+  $typingAction.empty();
+  $typingAction.append($message);
 }
 
 
@@ -238,12 +234,12 @@ socket.on('chat message', function(data) {
 
 // Whenever the server emits 'typing', show the typing message
 socket.on('typing', function(data) {
-  addChatTyping(data);
+  updateUsersWhoAreTyping(data);
 });
 
 // Whenever the server emits 'stop typing', kill the typing message
 socket.on('stop typing', function(data) {
-  removeChatTyping(data);
+  updateUsersWhoAreTyping(data);
 });
 
  // Whenever the server emits 'user left', log it in the chat body
