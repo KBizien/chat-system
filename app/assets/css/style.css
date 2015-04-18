@@ -58,13 +58,23 @@ body {
   font-weight: bold;
 }
 .messages {
+  list-style: none;
   overflow-y: scroll;
   margin: 0;
-  padding: 0 0 60px 0;
+  padding: 0 0 100px 0;
   height: 100%;
 }
 .messages li {
   padding: 5px 10px;
+}
+.typing-action {
+  list-style: none;
+  padding-left: 1em;
+  position: absolute;
+  bottom: 65px;
+  height: 35px;
+  left: 0;
+  right: 0;
 }
 .message__username {
   font-style: italic;

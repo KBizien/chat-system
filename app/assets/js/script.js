@@ -11,6 +11,7 @@ var TYPING_TIMER_LENGTH = 1200; // ms
 
 var $window = $(window);
 var $messages = $('.messages'); // Messages area
+var $typingAction = $('.typing-action'); // Typing area
 var $usernameInput = $('.usernameInput'); // Input for username
 var $inputMessage = $('.inputMessage'); // Input message input box
 var $loginPage = $('.login.page'); // The login page
@@ -84,6 +85,10 @@ function addChatMessage(data, options) {
     $typingMessages.remove();
   }
 
+  if (data.typing) {
+    options.typing = true;
+  }
+
   var $usernameDiv = $('<span class="message__username"/>')
     .text(data.username);
 
@@ -113,6 +118,9 @@ function displayMessage(message, options) {
 
   if (options.prepend) {
     $messages.prepend($message);
+  }
+  else if (options.typing) {
+    $typingAction.append($message);
   }
   else {
     $messages.append($message);
