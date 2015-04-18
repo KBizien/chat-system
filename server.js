@@ -27,7 +27,6 @@ app.get('/', function(req, res){
 
 // usernames which are currently connected to the chat
 var usernames = {};
-var numUsers = 0;
 
 io.on('connection', function(socket) {
   var addedUser = false;
@@ -38,15 +37,11 @@ io.on('connection', function(socket) {
     socket.username = username;
     // add the client's username to the global list
     usernames[username] = username;
-    ++numUsers;
     addedUser = true;
-    socket.emit('login', {
-      numUsers: numUsers
-    });
+    socket.emit('login');
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
-      username: socket.username,
-      numUsers: numUsers
+      username: socket.username
     });
   });
 
@@ -76,12 +71,10 @@ io.on('connection', function(socket) {
     // remove the username from global usernames list
     if (addedUser) {
       delete usernames[socket.username];
-      --numUsers;
 
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
-        username: socket.username,
-        numUsers: numUsers
+        username: socket.username
       });
     }
   });

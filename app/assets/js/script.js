@@ -53,17 +53,6 @@ function cleanInput(input) {
   return $('<div/>').text(input).text();
 }
 
-// Add a participant
-function addParticipantsMessage(data) {
-  var message = '';
-  if (data.numUsers === 1) {
-    message += "there's 1 participant";
-  } else {
-    message += "there are " + data.numUsers + " participants";
-  }
-  log(message);
-}
-
 // Log a message
 function log(message) {
   var $logInfo = $('<li>').text(message);
@@ -193,13 +182,11 @@ socket.on('login', function(data) {
   // Display the welcome message
   var message = "Welcome to Socket.IO Chat – ";
   log(message);
-  addParticipantsMessage(data);
 });
 
 // Whenever the server emits 'user joined', log it in the chat body
 socket.on('user joined', function(data) {
   log(data.username + ' joined');
-  addParticipantsMessage(data);
 });
 
 socket.on('chat message', function(data){
@@ -219,5 +206,4 @@ socket.on('stop typing', function(data) {
  // Whenever the server emits 'user left', log it in the chat body
 socket.on('user left', function(data) {
   log(data.username + ' left');
-  addParticipantsMessage(data);
 });
