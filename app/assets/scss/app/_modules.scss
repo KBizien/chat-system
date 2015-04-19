@@ -48,6 +48,20 @@
   cursor: pointer;
 }
 
+.login__footer {
+  position: absolute;
+  bottom: 2em;
+  left:0; right:0;
+  text-align: center;
+}
+.author {
+  color: $author-text-color;
+  letter-spacing: .18em;
+  a {
+    color: $author-text-color;
+  }
+}
+
 /*
  * Online users
  */
