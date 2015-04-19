@@ -230,6 +230,14 @@ $(function(){
       $('.online-users-mobile').animate({width:'toggle'},400);
   });
 
+   $(document).click(function(event) {
+    if(!$(event.target).closest('.chat__header .icon-users, .online-users-mobile').length) {
+      if($('.online-users-mobile').is(":visible")) {
+        $('.online-users-mobile').animate({width:'toggle'},400);
+      }
+    }
+  });
+
   /*
    * Socket events
    */
