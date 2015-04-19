@@ -4,21 +4,24 @@
   width: 100%;
 }
 
-/* login */
+/*
+ * Login page
+ */
+
 .login.page {
   text-align: center;
-  background-color: #009688;
+  background-color: $login-page-background-color;
   position: relative;
 }
 .login .title {
   font-size: 2.5em;
   padding: 1em .25em .5em .25em;
-  color: #F5F5F5;
+  color: $login-page-title-color;
 }
 .login .subtitle {
   padding: .75em .25em;
   font-size: 1.5em;
-  color: #F5F5F5;
+  color: $login-page-subtitle-color;
   font-weight: normal;
 }
 .username-input {
@@ -29,23 +32,25 @@
   margin: 0 auto .5em auto;
   padding-left: .25em;
   border: none;
-  color: #009688;
+  color: $input-text-color;
 }
 
 .login .login-submit {
   margin: 0 auto;
   display: block;
   width: 80%;
-  background-color: #F5F5F5;
+  background-color: $login-button-background-color;
   font-weight: bold;
   border: none;
   padding: 1em 2em;
-  color: #009688;
+  color: $login-button-text-color;
   font-size: 1em;
   cursor: pointer;
 }
 
-/* chat room */
+/*
+ * Chat room
+ */
 
 .chat.page {
   display: none;
@@ -56,17 +61,25 @@
   position: absolute;
   top: 0;
   padding: .75em .25em;
-  background-color: #009688;
+  background-color: $header-background-color;
   text-align: center;
-  border-bottom: 5px solid #B6B6B6;
+  border-bottom: 5px solid $border;
   box-sizing: border-box;
+  .icon-users {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    color: $header-text-color;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
 }
 .chat__header-title {
   font-size: 1.25em;
-  color: #F5F5F5;
+  color: $header-text-color;
 }
 .log {
-  color: gray;
+  color: $log-text-color;
   font-size: .75em;
   padding: 5px 10px;
   margin: 0;
@@ -74,6 +87,7 @@
 }
 .messages {
   position: absolute;
+  z-index: 1;
   list-style: none;
   overflow-y: auto;
   margin: 0;
@@ -96,25 +110,24 @@
   right: 0;
 }
 .typing-users {
-  color: gray;
+  color: $typing-user-text-color;
   font-size: .75em;
   padding-top: .65em;
   padding-left: 1em;
   font-style: italic;
   width: 100%;
-  border-top: 1px solid #B6B6B6;
+  border-top: 1px solid $border;
   box-sizing: border-box;
 }
 .message__username {
-  font-style: italic;
-  color: #009688;
+  color: $message-username-text-color;
   font-weight: bold;
   font-size: 1.15em;
   margin-right: .5em;
 }
 .chat__footer {
   width: 100%;
-  border-top: 5px solid #B6B6B6;
+  border-top: 5px solid $border;
   position: absolute;
   bottom: 0;
   height: 60px;
@@ -126,16 +139,17 @@
   border: none;
   font-size: 1.5em;
   padding-left: .25em;
-  color: #009688;
+  color: $input-text-color;
   float: left;
 }
 .submit-message {
   float: left;
   height: 55px;
   width: 25%;
+  cursor: pointer;
   text-align: center;
-  color: #F5F5F5;
-  background-color: #009688;
+  color: $send-button-text-color;
+  background-color: $send-button-background-color;
   font-size: 1em;
   font-weight: bold;
   border: none;

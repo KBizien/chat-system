@@ -1,0 +1,45 @@
+/*
+ * Colors
+ */
+
+$green: #009688;
+$grey: #9E9E9E;
+$light-grey: #B6B6B6;
+$white: #F5F5F5;
+$dark-grey: #333333;
+
+/*
+ * Proxy colors
+ */
+// General
+$input-text-color: $green;
+
+// login page
+$login-page-background-color: $green;
+$login-page-title-color: $white;
+$login-page-subtitle-color: $white;
+$login-button-background-color: $white;
+$login-button-text-color: $green;
+
+
+// chat room
+$header-background-color: $green;
+$header-text-color: $white;
+$border: $light-grey;
+$send-button-background-color: $green;
+$send-button-text-color: $white;
+$log-text-color: $grey;
+$typing-user-text-color: $grey;
+$message-username-text-color: $green;
+
+/*
+ * Fonts
+ */
+
+$roboto: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+/*
+ * Proxy fonts
+ */
+
+$body-font: $roboto;

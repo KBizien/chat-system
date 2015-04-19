@@ -193,12 +193,12 @@ $(function(){
     sendMessage();
   });
 
+  // hadler on focus & foucusout input for mobile devices
   $inputMessage.focus(function(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       $messages.addClass('messages--mobile');
     }
   });
-
   $inputMessage.focusout(function(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       $messages.removeClass('messages--mobile');
