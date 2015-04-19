@@ -7,7 +7,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 767px) {
   .username-input {
     width: 50%;
     display: inline-block;
@@ -19,6 +19,28 @@
     width: 35%;
     display: inline-block;
     vertical-align: middle;
+  }
+
+  .online-users-mobile {
+    display: none;
+  }
+  .online-users-desktop {
+    display: block;
+  }
+
+  .chat__header {
+    .icon-users {
+      display: none;
+    }
+  }
+  .messages {
+    left:250px;
+  }
+  .typing-action {
+    left:250px;
+  }
+  .chat__footer {
+    left: 250px;
   }
   .input-message {
     width: 85%;

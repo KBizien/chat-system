@@ -51,17 +51,21 @@
 /*
  * Online users
  */
-
 .online-users {
-  display: none;
   position: absolute;
-  z-index: 2;
   top: 50px;
-  left:0;
   bottom: 0;
   overflow-y: auto;
   width: 250px;
   background-color: $online-users-background-color;
+}
+.online-users-mobile {
+  display: none;
+  z-index: 2;
+  left:0;
+}
+.online-users-desktop {
+  display: none;
 }
 .online-users__items {
   margin: 0;
@@ -125,8 +129,6 @@
   overflow-y: auto;
   margin: 0;
   top: 50px; left:0; right:0; bottom: 90px;
-  max-width: 960px;
-  margin: 0 auto;
 }
 .messages--mobile {
   top:260px;
@@ -159,10 +161,9 @@
   margin-right: .5em;
 }
 .chat__footer {
-  width: 100%;
   border-top: 5px solid $border;
   position: absolute;
-  bottom: 0;
+  left:0;right:0;bottom: 0;
   height: 60px;
   box-sizing: border-box;
 }

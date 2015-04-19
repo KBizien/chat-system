@@ -227,8 +227,7 @@ $(function(){
 
   // handler on icon-users for display online users on mobile
   $('.chat__header .icon-users').click(function() {
-      $('.online-users').show;
-      $('.online-users').animate({width:'toggle'},400);
+      $('.online-users-mobile').animate({width:'toggle'},400);
   });
 
   /*
