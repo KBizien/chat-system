@@ -1,0 +1,50 @@
+{
+  "checksum": {
+    "previous": "032a9fa37d9470a2a19b77372694a2ca4cd6def3e282eb3fddd0e82b4f3884fe",
+    "current": "032a9fa37d9470a2a19b77372694a2ca4cd6def3e282eb3fddd0e82b4f3884fe"
+  },
+  "fonts": [
+    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.ttf",
+    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.svg",
+    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.woff",
+    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.eot"
+  ],
+  "glyphs": {
+    "users": {
+      "codepoint": 61696,
+      "source": "./users.svg"
+    }
+  },
+  "options": {
+    "autowidth": false,
+    "config": false,
+    "css_selector": ".icon-{{glyph}}",
+    "debug": false,
+    "font_ascent": 448,
+    "font_descent": 64,
+    "font_design_size": 16,
+    "font_em": 512,
+    "font_name": "fontcustom",
+    "force": false,
+    "input": {
+      "templates": ".",
+      "vectors": "."
+    },
+    "no_hash": false,
+    "output": {
+      "css": "fontcustom",
+      "fonts": "fontcustom",
+      "preview": "fontcustom"
+    },
+    "preprocessor_path": null,
+    "quiet": false,
+    "templates": [
+      "css",
+      "preview"
+    ]
+  },
+  "templates": [
+    "fontcustom/fontcustom.css",
+    "fontcustom/fontcustom-preview.html"
+  ]
+}
