@@ -88,7 +88,7 @@ $(function(){
 
   // Add a log information to the chat
   function displayMessage(message) {
-    var $message = $(message);
+    var $message = $(message).hide().fadeIn(300);
     $messages.append($message);
     $messages[0].scrollTop = $messages[0].scrollHeight;
   }
@@ -98,19 +98,23 @@ $(function(){
     $onlineUsers.empty();
     for (var i in data.onlineUsers) {
       $onlineUsers.append($('<li class="online-users__item ' + i + '"/>')
-        .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i]));
+        .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i])).hide().fadeIn(300);
     }
   }
 
   // add online user
   function addOnlineUser(data) {
-    $onlineUsers.append($('<li class="online-users__item ' + data.addOnlineUser + '"/>')
-      .append('<span class="online-users__item--status"></span>' + data.username));
+    var $appendUser = $('<li class="online-users__item ' + data.addOnlineUser + '"/>')
+      .append('<span class="online-users__item--status"></span>' + data.username)
+      .hide().fadeIn(300);
+    $onlineUsers.append($appendUser);
   }
 
   // Remove online user
   function removeOnlineUser(data) {
-    $('.' + data.removeOnlineUser).remove();
+    $('.' + data.removeOnlineUser).fadeOut(function(){
+      $(this).remove();
+    });
   }
 
   // Update the typing event
@@ -152,6 +156,11 @@ $(function(){
         displayUsersWhoAreTyping($message);
         break;
 
+      case usersTyping.length == 0:
+        console.log('nobody is typing');
+        nobodyIsTyping();
+        break;
+
       default:
         var $messageBodyDiv = '';
         var $message = $('<li/>')
@@ -162,11 +171,17 @@ $(function(){
 
   // display users who are typing
   function displayUsersWhoAreTyping(message) {
-    var $message = $(message);
+    var $message = $(message).hide().fadeIn(300);
     $typingAction.empty();
     $typingAction.append($message);
   }
-
+  // remove item user typing
+  function nobodyIsTyping() {
+    console.log('hèèè');
+    $('.typing-users').fadeOut(function(){
+      $typingAction.empty();
+    });
+  }
 
   /*
    * Events
