@@ -97,20 +97,20 @@ $(function(){
   function onlineUsers(data) {
     $onlineUsers.empty();
     for (var i in data.onlineUsers) {
-      $onlineUsers.append($('<li id="' + i + '" class="online-users__item"/>')
+      $onlineUsers.append($('<li class="online-users__item ' + i + '"/>')
         .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i]));
     }
   }
 
   // add online user
   function addOnlineUser(data) {
-    $onlineUsers.append($('<li id="' + data.addOnlineUser + '" class="online-users__item"/>')
+    $onlineUsers.append($('<li class="online-users__item ' + data.addOnlineUser + '"/>')
       .append('<span class="online-users__item--status"></span>' + data.username));
   }
 
   // Remove online user
   function removeOnlineUser(data) {
-    $('#' + data.removeOnlineUser).remove();
+    $('.' + data.removeOnlineUser).remove();
   }
 
   // Update the typing event
