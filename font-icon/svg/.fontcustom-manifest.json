@@ -1,15 +1,19 @@
 {
   "checksum": {
-    "previous": "032a9fa37d9470a2a19b77372694a2ca4cd6def3e282eb3fddd0e82b4f3884fe",
-    "current": "032a9fa37d9470a2a19b77372694a2ca4cd6def3e282eb3fddd0e82b4f3884fe"
+    "previous": "34976fa218f8d6b20e81c71bec9b673507aeb2a94f37a8fb41f8e663f4ae9458",
+    "current": "34976fa218f8d6b20e81c71bec9b673507aeb2a94f37a8fb41f8e663f4ae9458"
   },
   "fonts": [
-    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.ttf",
-    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.svg",
-    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.woff",
-    "fontcustom/fontcustom_032a9fa37d9470a2a19b77372694a2ca.eot"
+    "fontcustom/fontcustom_34976fa218f8d6b20e81c71bec9b6735.ttf",
+    "fontcustom/fontcustom_34976fa218f8d6b20e81c71bec9b6735.svg",
+    "fontcustom/fontcustom_34976fa218f8d6b20e81c71bec9b6735.woff",
+    "fontcustom/fontcustom_34976fa218f8d6b20e81c71bec9b6735.eot"
   ],
   "glyphs": {
+    "heart": {
+      "codepoint": 61697,
+      "source": "./heart.svg"
+    },
     "users": {
       "codepoint": 61696,
       "source": "./users.svg"
