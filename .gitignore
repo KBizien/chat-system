@@ -1,4 +1,4 @@
 node_modules/
 npm-debug.log
 .sass-cache
-app/assets/css/
+app/assets/css/app.css.map
