@@ -7,11 +7,15 @@ html,
 body {
   height: 100%;
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #F5F5F5;
 }
 input {
   -webkit-appearance: none;
   -webkit-border-radius:0;
   border-radius:0;
+}
+input:focus {
+  outline: none;
 }
 .page {
   height: 100%;
@@ -28,12 +32,12 @@ input {
 .login .title {
   font-size: 2.5em;
   padding: 1em .25em .5em .25em;
-  color: #FFFFFF;
+  color: #F5F5F5;
 }
 .login .subtitle {
   padding: .75em .25em;
   font-size: 1.5em;
-  color: #FFFFFF;
+  color: #F5F5F5;
   font-weight: normal;
 }
 .username-input {
@@ -51,7 +55,7 @@ input {
   margin: 0 auto;
   display: block;
   width: 75%;
-  background-color: #FFFFFF;
+  background-color: #F5F5F5;
   font-weight: bold;
   border: none;
   padding: 1em 2em;
@@ -65,25 +69,34 @@ input {
 .chat.page {
   display: none;
 }
+.chat__header {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  background-color: #009688;
+  text-align: center;
+  border-bottom: 5px solid #B6B6B6;
+}
+.chat__header-title {
+  font-size: 1.25em;
+  color: #F5F5F5;
+}
 .log {
   color: gray;
   font-size: .75em;
   margin: 5px;
   font-style: italic;
 }
-.log--title {
-  text-align: center;
-  font-style: normal;
-  font-size: 1.5em;
-  color: #212121;
-  font-weight: bold;
-}
 .messages {
   list-style: none;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0;
-  padding: 0 0 100px 0;
+  padding: 50px 0 100px 0;
   height: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 }
 .messages li {
   padding: 5px 10px;
@@ -91,26 +104,52 @@ input {
 .typing-action {
   list-style: none;
   padding-left: 1em;
+  padding-top: .5em;
   position: absolute;
-  bottom: 65px;
-  height: 35px;
+  bottom: 60px;
+  height: 40px;
   left: 0;
   right: 0;
 }
+.typing-users {
+  color: gray;
+  font-size: .75em;
+  font-style: italic;
+}
 .message__username {
   font-style: italic;
-  color: #2854A5;
+  color: #009688;
   font-weight: bold;
+  font-size: 1.15em;
   margin-right: .5em;
 }
 .input-message {
-  border: 3px solid #212121;
+  border: none;
+  border-top: 5px solid #B6B6B6;
   height: 60px;
-  font-size: 2em;
+  font-size: 1.5em;
   padding: 10px;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 75%;
+  color: #009688;
+  box-sizing: border-box;
+}
+.submit-message {
+  width: 25%;
+  box-sizing: border-box;
+  height: 60px;
+  text-align: center;
+  color: #F5F5F5;
+  background-color: #009688;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-top: 5px solid #B6B6B6;
 }
 
 @media screen and (min-width: 480px) {
@@ -128,6 +167,12 @@ input {
   }
   .login .login-submit {
     width: 35%;
+  }
+  .input-message {
+    width: 85%;
+  }
+  .submit-message {
+    width: 15%;
   }
 }
 

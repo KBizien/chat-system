@@ -42,8 +42,7 @@ function setUsername() {
     $loginPage.hide();
     $chatPage.show();
     $loginPage.off('click');
-    $currentInput = $inputMessage.focus();
-
+    $currentInput = $inputMessage;
     // Tell the server your username
     socket.emit('add user', username);
   }
@@ -55,14 +54,9 @@ function cleanInput(input) {
 }
 
 // Log a message
-function log(message, options) {
-  if (options.title) {
-    var $logInfo = $('<li>').addClass('log log--title').text(message);
-  }
-  else {
-    var $logInfo = $('<li>').addClass('log').text(message);
-  }
-  displayMessage($logInfo, options);
+function log(message) {
+  var $logInfo = $('<li>').addClass('log').text(message);
+  displayMessage($logInfo);
 }
 
 // Sends a chat message
@@ -79,34 +73,20 @@ function sendMessage() {
 }
 
 // Adds the visual chat message to the message list
-function addChatMessage(data, options) {
+function addChatMessage(data) {
   var $usernameDiv = $('<span class="message__username"/>')
     .text(data.username);
   var $messageBodyDiv = $('<span class="message__body">')
     .text(data.message);
   var $message = $('<li class="message"/>')
     .append($usernameDiv, $messageBodyDiv);
-  displayMessage($message, options);
+  displayMessage($message);
 }
 
 // Add a log information to the chat
-function displayMessage(message, options) {
+function displayMessage(message) {
   var $message = $(message);
-
-  // Setup default options
-  if (!options) {
-    options = {};
-  }
-  if (typeof options.prepend === 'undefined') {
-    options.prepend = false;
-  }
-
-  if (options.prepend) {
-    $messages.prepend($message);
-  }
-  else {
-    $messages.append($message);
-  }
+  $messages.append($message);
   $messages[0].scrollTop = $messages[0].scrollHeight;
 }
 
@@ -138,21 +118,21 @@ function updateUsersWhoAreTyping(data) {
 
     case usersTyping.length == 1:
       var $messageBodyDiv = usersTyping.toString() + ' is typing';
-      var $message = $('<li class="message"/>')
+      var $message = $('<li class="typing-users"/>')
         .append($messageBodyDiv);
       displayUsersWhoAreTyping($message);
       break;
 
     case usersTyping.length > 1:
       var $messageBodyDiv = usersTyping.join(' and ') + ' are typing';
-      var $message = $('<li class="message"/>')
+      var $message = $('<li class="typing-users"/>')
         .append($messageBodyDiv);
       displayUsersWhoAreTyping($message);
       break;
 
     default:
       var $messageBodyDiv = '';
-      var $message = $('<li class="message"/>')
+      var $message = $('<li class="typing-users"/>')
         .append($messageBodyDiv);
       displayUsersWhoAreTyping($message);
   }
@@ -206,6 +186,10 @@ $('.login-submit').click(function(){
     setUsername();
 });
 
+$('.submit-message').click(function(){
+  $currentInput.focus();
+  sendMessage();
+});
 
 /*
  * Socket events
@@ -214,14 +198,11 @@ $('.login-submit').click(function(){
 // Whenever the server emits 'login', log the login message
 socket.on('login', function(data) {
   connected = true;
-  // Display the welcome message
-  var message = "Chat ma gueule ! Wesh";
-  log(message, {title: true, prepend: true});
 });
 
 // Whenever the server emits 'user joined', log it in the chat body
 socket.on('user joined', function(data) {
-  log(data.username + ' joined the chat', {title: false});
+  log(data.username + ' joined the chat');
 });
 
 socket.on('chat message', function(data) {
@@ -240,5 +221,5 @@ socket.on('stop typing', function(data) {
 
  // Whenever the server emits 'user left', log it in the chat body
 socket.on('user left', function(data) {
-  log(data.username + ' left the chat', {title: false});
+  log(data.username + ' left the chat');
 });
