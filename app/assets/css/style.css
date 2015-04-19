@@ -19,7 +19,7 @@ input:focus {
 }
 .page {
   height: 100%;
-  position: absolute;
+  position: relative;
   width: 100%;
 }
 
@@ -41,7 +41,7 @@ input:focus {
   font-weight: normal;
 }
 .username-input {
-  width: 90%;
+  width: 80%;
   height: 50px;
   font-size: 1.5em;
   display: block;
@@ -54,7 +54,7 @@ input:focus {
 .login .login-submit {
   margin: 0 auto;
   display: block;
-  width: 75%;
+  width: 80%;
   background-color: #F5F5F5;
   font-weight: bold;
   border: none;
@@ -74,10 +74,11 @@ input:focus {
   height: 50px;
   position: absolute;
   top: 0;
-  padding: 10px;
+  padding: .75em .25em;
   background-color: #009688;
   text-align: center;
   border-bottom: 5px solid #B6B6B6;
+  box-sizing: border-box;
 }
 .chat__header-title {
   font-size: 1.25em;
@@ -86,15 +87,16 @@ input:focus {
 .log {
   color: gray;
   font-size: .75em;
-  margin: 5px;
+  padding: 5px 10px;
+  margin: 0;
   font-style: italic;
 }
 .messages {
+  position: absolute;
   list-style: none;
   overflow-y: auto;
   margin: 0;
-  padding: 50px 0 100px 0;
-  height: 100%;
+  top: 50px; left:0; right:0; bottom: 90px;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -103,18 +105,21 @@ input:focus {
 }
 .typing-action {
   list-style: none;
-  padding-left: 1em;
-  padding-top: .5em;
   position: absolute;
   bottom: 60px;
-  height: 40px;
+  height: 30px;
   left: 0;
   right: 0;
 }
 .typing-users {
   color: gray;
   font-size: .75em;
+  padding-top: .65em;
+  padding-left: 1em;
   font-style: italic;
+  width: 100%;
+  border-top: 1px solid #B6B6B6;
+  box-sizing: border-box;
 }
 .message__username {
   font-style: italic;
@@ -123,50 +128,56 @@ input:focus {
   font-size: 1.15em;
   margin-right: .5em;
 }
-.input-message {
-  border: none;
+.chat__footer {
+  width: 100%;
   border-top: 5px solid #B6B6B6;
-  height: 60px;
-  font-size: 1.5em;
-  padding: 10px;
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  width: 75%;
-  color: #009688;
+  height: 60px;
   box-sizing: border-box;
 }
+.input-message {
+  height: 55px;
+  width: 75%;
+  border: none;
+  font-size: 1.5em;
+  padding-left: .25em;
+  color: #009688;
+  float: left;
+}
 .submit-message {
+  float: left;
+  height: 55px;
   width: 25%;
-  box-sizing: border-box;
-  height: 60px;
   text-align: center;
   color: #F5F5F5;
   background-color: #009688;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 10px;
   font-size: 1em;
   font-weight: bold;
   border: none;
-  border-top: 5px solid #B6B6B6;
 }
 
 @media screen and (min-width: 480px) {
   .username-input {
-    width: 65%;
+    width: 60%;
   }
   .login .login-submit {
-    width: 50%;
+    width: 60%;
   }
 }
 
 @media screen and (min-width: 768px) {
   .username-input {
     width: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;
+    margin-right: .25em;
   }
   .login .login-submit {
     width: 35%;
+    display: inline-block;
+    vertical-align: middle;
   }
   .input-message {
     width: 85%;

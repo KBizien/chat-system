@@ -132,7 +132,7 @@ function updateUsersWhoAreTyping(data) {
 
     default:
       var $messageBodyDiv = '';
-      var $message = $('<li class="typing-users"/>')
+      var $message = $('<li/>')
         .append($messageBodyDiv);
       displayUsersWhoAreTyping($message);
   }
