@@ -42,12 +42,15 @@ io.on('connection', function(socket) {
     // we store the username in the socket session for this client
     socket.username = username;
     // add the client's username to the global list
-    usernames[username] = username;
+    usernames[socket.id] = username;
     addedUser = true;
-    socket.emit('login');
+    socket.emit('login', {
+      onlineUsers: usernames
+    });
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
-      username: socket.username
+      username: socket.username,
+      addOnlineUser: socket.id
     });
   });
 
@@ -78,11 +81,12 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     // remove the username from global usernames list
     if (addedUser) {
-      delete usernames[socket.username];
+      delete usernames[socket.id];
 
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
-        username: socket.username
+        username: socket.username,
+        removeOnlineUser: socket.id
       });
     }
   });

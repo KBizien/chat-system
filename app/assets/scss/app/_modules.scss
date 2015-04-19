@@ -49,6 +49,39 @@
 }
 
 /*
+ * Online users
+ */
+
+.online-users {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 50px;
+  left:0;
+  bottom: 0;
+  overflow-y: auto;
+  width: 250px;
+  background-color: $online-users-background-color;
+}
+.online-users__items {
+  margin: 0;
+  width: 250px;
+  padding: 0 0 0 1em;
+  list-style: none;
+}
+.online-users__item {
+  padding: .5em 0;
+  color: $online-users-text-color;
+}
+.online-users__item--status {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: $online-users-status-background-color;
+  border-radius: 50%;
+  margin-right: .5em;
+}
+/*
  * Chat room
  */
 

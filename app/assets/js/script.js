@@ -18,6 +18,7 @@ $(function(){
   var $inputMessage = $('.input-message'); // Input message input box
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
+  var $onlineUsers = $('.online-users__items'); // users online area
 
   // Prompt for setting a username
   var username;
@@ -92,8 +93,27 @@ $(function(){
     $messages[0].scrollTop = $messages[0].scrollHeight;
   }
 
+  // Online users when user logged in
+  function onlineUsers(data) {
+    $onlineUsers.empty();
+    for (var i in data.onlineUsers) {
+      $onlineUsers.append($('<li id="' + i + '" class="online-users__item"/>')
+        .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i]));
+    }
+  }
 
-  // Updates the typing event
+  // add online user
+  function addOnlineUser(data) {
+    $onlineUsers.append($('<li id="' + data.addOnlineUser + '" class="online-users__item"/>')
+      .append('<span class="online-users__item--status"></span>' + data.username));
+  }
+
+  // Remove online user
+  function removeOnlineUser(data) {
+    $('#' + data.removeOnlineUser).remove();
+  }
+
+  // Update the typing event
   function updateTyping() {
     if (connected) {
       if (!typing) {
@@ -205,6 +225,12 @@ $(function(){
     }
   });
 
+  // handler on icon-users for display online users on mobile
+  $('.chat__header .icon-users').click(function() {
+      $('.online-users').show;
+      $('.online-users').animate({width:'toggle'},400);
+  });
+
   /*
    * Socket events
    */
@@ -212,11 +238,13 @@ $(function(){
   // Whenever the server emits 'login', log the login message
   socket.on('login', function(data) {
     connected = true;
+    onlineUsers(data);
   });
 
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', function(data) {
     log(data.username + ' joined the chat');
+    addOnlineUser(data);
   });
 
   socket.on('chat message', function(data) {
@@ -236,6 +264,7 @@ $(function(){
    // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', function(data) {
     log(data.username + ' left the chat');
+    removeOnlineUser(data);
   });
 
 });
