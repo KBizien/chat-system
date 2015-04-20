@@ -12,7 +12,8 @@ $(function(){
    */
 
   var $window = $(window);
-  var $messages = $('.messages'); // Messages area
+  var $commonMessages = $('.chat-common'); // Common chat area
+  var $messages = $('.messages'); // Common Messages area
   var $typingAction = $('.typing-action'); // Typing area
   var $usernameInput = $('.username-input'); // Input for username
   var $inputMessage = $('.input-message'); // Input message input box

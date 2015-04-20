@@ -24,7 +24,7 @@
     <section class="chat page">
       <div class="chat__header">
         <i class="icon icon-users"></i>
-        <h1 class="chat__header-title">Chat ma gueule. Wesh !</h1>
+        <h1 class="chat__header-title">Instant-M</h1>
       </div>
 
       <section class="online-users online-users-mobile">
@@ -35,13 +35,15 @@
         <ul class="online-users__items"></ul>
       </section>
 
-      <ul class="messages"></ul>
-      <ul class="typing-action"></ul>
+      <section class="chat-common">
+        <ul class="messages"></ul>
+        <ul class="typing-action"></ul>
+        <div class="chat__footer chat__footer--common">
+          <input class="input-message" placeholder="Type here…" />
+          <button type="button" class="submit-message">Send</button>
+        </div>
+      </section>
 
-      <div class="chat__footer">
-        <input class="input-message" placeholder="Type here…" />
-        <button type="button" class="submit-message">Send</button>
-      </div>
     </section>
 
   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>

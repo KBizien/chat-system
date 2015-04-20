@@ -89,6 +89,11 @@
   padding: 0 0 0 1em;
   list-style: none;
 }
+.online-users__room ,
+.online-users__item {
+  cursor: pointer;
+}
+
 .online-users__item {
   padding: .5em 0;
   color: $online-users-text-color;
@@ -107,6 +112,7 @@
 
 .chat.page {
   display: none;
+  position: relative;
 }
 .chat__header {
   width: 100%;
@@ -138,13 +144,18 @@
   margin: 0;
   font-style: italic;
 }
+.chat-common {
+  position: absolute;
+  margin: 0;
+  top: 50px; left:0; right:0; bottom: 0;
+}
 .messages {
   position: absolute;
   z-index: 1;
   list-style: none;
   overflow-y: auto;
   margin: 0;
-  top: 50px; left:0; right:0; bottom: 90px;
+  top: 0; left:0; right:0; bottom: 90px;
 }
 .messages--mobile {
   top:260px;
