@@ -73,10 +73,23 @@ $(document).click(function(event) {
 
 // handler for chat links
 $('body').on('click', '.online-users__room', function() {
-  $privateChat.hide();
+  $('.chat-private').hide();
   $commonMessages.hide().fadeIn(300);
 });
 
 $('body').on('click', '.online-users__item', function() {
-  $commonMessages.fadeOut(300);
+  var socketId = $(this).data('socket-id');
+
+  if ($('.chat-common').is(':visible')) {
+    $commonMessages.fadeOut(300);
+  }
+  else {
+    $('.chat-private').fadeOut(300);
+  }
+
+  $('.chat-private').each(function(index) {
+    if ($(this).data('socket-id') == socketId) {
+      $(this).hide().fadeIn(300);
+    }
+  });
 });

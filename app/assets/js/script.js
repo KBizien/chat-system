@@ -18,7 +18,6 @@ var $inputMessage = $('.input-message'); // Input message input box
 var $loginPage = $('.login.page'); // The login page
 var $chatPage = $('.chat.page'); // The chatroom page
 var $onlineUsers = $('.online-users__items'); // users online area
-var $privateChat = $('.chat-private'); // private chat area
 
 // Prompt for setting a username
 var username;
@@ -95,8 +94,8 @@ function displayMessage(message) {
 
 // Init privates chats for users onlines
 function initPrivatesChats(data) {
-  if ($privateChat.length) {
-    $privateChat.remove();
+  if ($('.chat-private').length) {
+    $('.chat-private').remove();
   }
   for (var i in data.onlineUsers) {
     if (i !== data.userId) {
@@ -127,22 +126,30 @@ function createPrivateChat(data) {
 // Online users when user logged in
 function onlineUsers(data) {
   $onlineUsers.empty();
-  $onlineUsers.append($('<li class="online-users__room"/>').append('<span class="online-users__item--status"></span> Room commune')).hide().fadeIn(300);
+  $onlineUsers
+    .append($('<li class="online-users__room"/>')
+    .append('<span class="online-users__item--status"></span> Room commune'))
+    .hide()
+    .fadeIn(300);
 
   for (var i in data.onlineUsers) {
-    $onlineUsers.append($('<li class="online-users__item"/>')
+    $onlineUsers
+      .append($('<li class="online-users__item"/>')
       .data('socket-id', i)
-      .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i])).hide().fadeIn(300);
+      .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i]))
+      .hide()
+      .fadeIn(300);
   }
 }
 
 // add online user
 function addOnlineUser(data) {
-  var $appendUser = $('<li class="online-users__item"/>')
+  $onlineUsers
+    .append($('<li class="online-users__item"/>')
     .data('socket-id', data.addOnlineUser)
-    .append('<span class="online-users__item--status"></span>' + data.username)
-    .hide().fadeIn(300);
-  $onlineUsers.append($appendUser);
+    .append('<span class="online-users__item--status"></span>' + data.username))
+    .hide()
+    .fadeIn(300);
 }
 
 // Remove online user
