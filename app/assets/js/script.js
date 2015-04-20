@@ -98,15 +98,13 @@ function initPrivatesChats(data) {
     $('.chat-private').remove();
   }
   for (var i in data.onlineUsers) {
-    if (i !== data.userId) {
-      createPrivateChat(data);
-    }
+    createPrivateChat(i);
   }
 }
 
 // Add private chat for new user online
 function addPrivateChat(data) {
-  createPrivateChat(data);
+  createPrivateChat(data.addOnlineUser);
 }
 
 // Create prive chat
@@ -117,7 +115,7 @@ function createPrivateChat(data) {
     .append('<input class="input-message" placeholder="Type here…"/>', '<button type="button" class="submit-message">Send</button>');
 
    var $createPrivateChat = $('<section class="chat-private"/>')
-    .data('socket-id', data.addOnlineUser)
+    .data('socket-id', data)
     .append(privateMessagesArea, typingUsersArea, footerPrivateChat);
 
     $chatPage.append($createPrivateChat);
