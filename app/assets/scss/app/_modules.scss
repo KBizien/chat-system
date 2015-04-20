@@ -89,12 +89,9 @@
   padding: 0 0 0 1em;
   list-style: none;
 }
-.online-users__room ,
+.online-users__room,
 .online-users__item {
   cursor: pointer;
-}
-
-.online-users__item {
   padding: .5em 0;
   color: $online-users-text-color;
 }
@@ -144,26 +141,32 @@
   margin: 0;
   font-style: italic;
 }
-.chat-common {
+.chat-common,
+.chat-private {
   position: absolute;
   margin: 0;
   top: 50px; left:0; right:0; bottom: 0;
 }
-.messages {
+.chat-private {
+  display: none;
+}
+.messages,
+.message-private {
   position: absolute;
   z-index: 1;
   list-style: none;
   overflow-y: auto;
   margin: 0;
   top: 0; left:0; right:0; bottom: 90px;
+  li {
+    padding: 5px 10px;
+  }
 }
 .messages--mobile {
-  top:260px;
+  top:210px;
 }
-.messages li {
-  padding: 5px 10px;
-}
-.typing-action {
+.typing-action,
+.typing-action-private {
   list-style: none;
   position: absolute;
   bottom: 60px;

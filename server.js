@@ -45,6 +45,7 @@ io.on('connection', function(socket) {
     usernames[socket.id] = username;
     addedUser = true;
     socket.emit('login', {
+      userId: socket.id,
       onlineUsers: usernames
     });
     // echo globally (all clients) that a person has connected

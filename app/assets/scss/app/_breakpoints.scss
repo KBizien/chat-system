@@ -38,8 +38,12 @@
       display: none;
     }
   }
-  .chat-common {
+  .chat-common,
+  .chat-private {
     left: 250px;
+  }
+  .chat-private {
+    display: none;
   }
   .input-message {
     width: 85%;
