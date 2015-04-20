@@ -97,14 +97,16 @@ $(function(){
   function onlineUsers(data) {
     $onlineUsers.empty();
     for (var i in data.onlineUsers) {
-      $onlineUsers.append($('<li class="online-users__item ' + i + '"/>')
+      $onlineUsers.append($('<li class="online-users__item"/>')
+        .data('socket-id', i)
         .append('<span class="online-users__item--status"></span>' + data.onlineUsers[i])).hide().fadeIn(300);
     }
   }
 
   // add online user
   function addOnlineUser(data) {
-    var $appendUser = $('<li class="online-users__item ' + data.addOnlineUser + '"/>')
+    var $appendUser = $('<li class="online-users__item"/>')
+      .data('socket-id', data.addOnlineUser)
       .append('<span class="online-users__item--status"></span>' + data.username)
       .hide().fadeIn(300);
     $onlineUsers.append($appendUser);
@@ -112,8 +114,12 @@ $(function(){
 
   // Remove online user
   function removeOnlineUser(data) {
-    $('.' + data.removeOnlineUser).fadeOut(function(){
-      $(this).remove();
+    $(".online-users__item").each(function(index) {
+      if ($(this).data('socket-id') == data.removeOnlineUser) {
+        $(this).fadeOut(function(){
+          $(this).remove();
+        });
+      }
     });
   }
 
