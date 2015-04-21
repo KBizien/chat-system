@@ -93,6 +93,10 @@ function displayMessage(message, type, socketId) {
     $messages.append($message);
     $messages[0].scrollTop = $messages[0].scrollHeight;
   }
+  else if (type == 'log-message') {
+    $('.messages-area').append($message);
+    $('.messages-area')[0].scrollTop = $('.messages-area')[0].scrollHeight;
+  }
   else {
     $('.chat-private').each(function(index) {
       if ($(this).data('socket-id') == socketId) {
