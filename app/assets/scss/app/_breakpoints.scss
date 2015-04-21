@@ -45,10 +45,12 @@
   .chat-private {
     display: none;
   }
-  .input-message {
+  .input-message,
+  .input-message-private {
     width: 85%;
   }
-  .submit-message {
+  .submit-message,
+  .submit-message-private {
     width: 15%;
   }
 }

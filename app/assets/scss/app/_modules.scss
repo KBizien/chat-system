@@ -198,7 +198,8 @@
   height: 60px;
   box-sizing: border-box;
 }
-.input-message {
+.input-message,
+.input-message-private {
   height: 55px;
   width: 75%;
   border: none;
@@ -207,7 +208,8 @@
   color: $input-text-color;
   float: left;
 }
-.submit-message {
+.submit-message,
+.submit-message-private {
   float: left;
   height: 55px;
   width: 25%;

@@ -8,13 +8,19 @@ $loginPage.click(function() {
 });
 
 // Focus input when clicking on the message input's border
-$inputMessage.click(function() {
-  $inputMessage.focus();
+$currentInput.click(function() {
+  $currentInput.focus();
 });
 
-// Handler on inputMessage - if someone is typing
-$inputMessage.on('input', function() {
-  updateTyping();
+// Handler on input - if someone is typing
+
+$('input').on('input', function() {
+  if ($(this).hasClass('input-message')) {
+    updateTyping();
+  }
+  else {
+    updateTyping();
+  }
 });
 
 // Keyboard events
@@ -23,16 +29,20 @@ $window.keydown(function(event) {
   if (!(event.ctrlKey || event.metaKey || event.altKey)) {
     $currentInput.focus();
   }
+
   // When the client hits ENTER on their keyboard
   if (event.which === 13) {
     switch(true) {
       case username && $currentInput.hasClass('input-message'):
-        sendMessage();
+        sendMessage('common-message');
         break;
+      case username && currentInput.hasClass('input-message-private'):
 
+        break;
       default:
         setUsername();
     }
+    $currentInput.focus();
   }
 });
 
@@ -41,9 +51,18 @@ $('.login-submit').click(function(){
     setUsername();
 });
 
-$('.submit-message').click(function(){
+$('.btn-send').click(function(){
   $currentInput.focus();
-  sendMessage();
+  switch(true) {
+    case username && $currentInput.hasClass('input-message'):
+      sendMessage('common-message');
+      break;
+    case username && currentInput.hasClass('input-message-private'):
+
+      break;
+    default:
+      setUsername();
+  }
 });
 
 // hadler on focus & foucusout input for mobile devices
@@ -75,6 +94,7 @@ $(document).click(function(event) {
 $('body').on('click', '.online-users__room', function() {
   $('.chat-private').hide();
   $commonMessages.hide().fadeIn(300);
+  $currentInput = $inputMessage;
 });
 
 $('body').on('click', '.online-users__item', function() {
@@ -90,6 +110,7 @@ $('body').on('click', '.online-users__item', function() {
   $('.chat-private').each(function(index) {
     if ($(this).data('socket-id') == socketId) {
       $(this).hide().fadeIn(300);
+      $currentInput = $(this).find('.input-message-private');
     }
   });
 });

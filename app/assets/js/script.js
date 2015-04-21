@@ -56,19 +56,20 @@ function cleanInput(input) {
 }
 
 // Log a message
-function log(message) {
-  var $logInfo = $('<li>').addClass('log').text(message);
-  displayMessage($logInfo);
+function log(data) {
+  var $logInfo = $('<li>').addClass('log').text(data.message);
+  displayMessage($logInfo, data.type);
 }
 
 // Sends a chat message
-function sendMessage() {
-  var message = cleanInput($inputMessage.val());
+function sendMessage(data) {
+  var message = cleanInput($currentInput.val());
+
   // if there is a non-empty message and a socket connection
   if (message && connected) {
-    $inputMessage.val('');
+    $currentInput.val('');
     // tell server to execute 'new message' and send along one parameter
-    socket.emit('chat message', message);
+    socket.emit('chat message', {message: message, type: data});
     socket.emit('stop typing');
     typing = false;
   }
@@ -82,14 +83,17 @@ function addChatMessage(data) {
     .text(data.message);
   var $message = $('<li class="message"/>')
     .append($usernameDiv, $messageBodyDiv);
-  displayMessage($message);
+  displayMessage($message, data.type);
+  console.log(data.type);
 }
 
 // Add a log information to the chat
-function displayMessage(message) {
-  var $message = $(message).hide().fadeIn(300);
-  $messages.append($message);
-  $messages[0].scrollTop = $messages[0].scrollHeight;
+function displayMessage(message, type) {
+  if (type == 'common-message') {
+    var $message = $(message).hide().fadeIn(300);
+    $messages.append($message);
+    $messages[0].scrollTop = $messages[0].scrollHeight;
+  }
 }
 
 // Init privates chats for users onlines
@@ -112,7 +116,7 @@ function createPrivateChat(data) {
   var privateMessagesArea = $('<ul class="messages-private"/>');
   var typingUsersArea = $('<ul class="typing-action-private"/>');
   var footerPrivateChat = $('<div class="chat__footer chat__footer--private"/>')
-    .append('<input class="input-message" placeholder="Type here…"/>', '<button type="button" class="submit-message">Send</button>');
+    .append('<input class="input-message-private" placeholder="Type here…"/>', '<button type="button" class="btn-send submit-message-private">Send</button>');
 
    var $createPrivateChat = $('<section class="chat-private"/>')
     .data('socket-id', data)
@@ -201,7 +205,7 @@ function updateUsersWhoAreTyping(data) {
       break;
 
     case usersTyping.length == 0:
-      nobodyIsTyping();
+      nobodyIsTyping(data.type);
       break;
 
     default:

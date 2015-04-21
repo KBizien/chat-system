@@ -11,7 +11,7 @@
 
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', function(data) {
-    log(data.username + ' joined the chat');
+    log({message: data.username + ' joined the chat', type: 'common-message'} );
     addOnlineUser(data);
     addPrivateChat(data);
   });

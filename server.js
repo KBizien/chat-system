@@ -55,11 +55,14 @@ io.on('connection', function(socket) {
     });
   });
 
-  socket.on('chat message', function(message){
-    io.emit('chat message', {
-      username: socket.username,
-      message: message
-    });
+  socket.on('chat message', function(data){
+    if (data.type == 'common-message') {
+      io.emit('chat message', {
+        type: data.type,
+        username: socket.username,
+        message: data.message
+      });
+    }
   });
 
   // when the client emits 'typing', we broadcast it to others
