@@ -18,9 +18,6 @@ $('input').on('input', function() {
   if ($(this).hasClass('input-message')) {
     updateTyping();
   }
-  else {
-    updateTyping();
-  }
 });
 
 // Keyboard events
@@ -34,10 +31,12 @@ $window.keydown(function(event) {
   if (event.which === 13) {
     switch(true) {
       case username && $currentInput.hasClass('input-message'):
-        sendMessage('common-message');
+        var socket = 'common-message';
+        sendMessage(socket);
         break;
-      case username && currentInput.hasClass('input-message-private'):
-
+      case username && $currentInput.hasClass('input-message-private'):
+        var socket = $currentInput.closest('.chat-private').data('socket-id');
+        sendMessage(socket);
         break;
       default:
         setUsername();
@@ -51,14 +50,17 @@ $('.login-submit').click(function(){
     setUsername();
 });
 
-$('.btn-send').click(function(){
+// handler on submit chat message
+$('body').on('click', '.btn-send', function(){
   $currentInput.focus();
   switch(true) {
     case username && $currentInput.hasClass('input-message'):
-      sendMessage('common-message');
+      var socket = 'common-message';
+      sendMessage(socket);
       break;
-    case username && currentInput.hasClass('input-message-private'):
-
+    case username && $currentInput.hasClass('input-message-private'):
+      var socket = $currentInput.closest('.chat-private').data('socket-id');
+      sendMessage(socket);
       break;
     default:
       setUsername();
@@ -66,14 +68,14 @@ $('.btn-send').click(function(){
 });
 
 // hadler on focus & foucusout input for mobile devices
-$inputMessage.focus(function(){
+$('body').on('focus', 'input', function(){
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    $messages.addClass('messages--mobile');
+    $('.messages-area').addClass('messages--mobile');
   }
 });
-$inputMessage.focusout(function(){
+$('body').on('focusout', 'input', function(){
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    $messages.removeClass('messages--mobile');
+    $('.messages-area').removeClass('messages--mobile');
   }
 });
 

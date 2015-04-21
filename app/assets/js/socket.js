@@ -17,7 +17,7 @@
   });
 
   socket.on('chat message', function(data) {
-    addChatMessage(data);
+    createChatMessage(data);
   });
 
   // Whenever the server emits 'typing', show the typing message

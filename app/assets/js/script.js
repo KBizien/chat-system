@@ -69,30 +69,37 @@ function sendMessage(data) {
   if (message && connected) {
     $currentInput.val('');
     // tell server to execute 'new message' and send along one parameter
-    socket.emit('chat message', {message: message, type: data});
+    socket.emit('chat message', {message: message, socket: data});
     socket.emit('stop typing');
     typing = false;
   }
 }
 
 // Adds the visual chat message to the message list
-function addChatMessage(data) {
+function createChatMessage(data) {
   var $usernameDiv = $('<span class="message__username"/>')
     .text(data.username);
   var $messageBodyDiv = $('<span class="message__body">')
     .text(data.message);
   var $message = $('<li class="message"/>')
     .append($usernameDiv, $messageBodyDiv);
-  displayMessage($message, data.type);
-  console.log(data.type);
+  displayMessage($message, data.type, data.socketId);
 }
 
 // Add a log information to the chat
-function displayMessage(message, type) {
+function displayMessage(message, type, socketId) {
+  var $message = $(message).hide().fadeIn(300);
   if (type == 'common-message') {
-    var $message = $(message).hide().fadeIn(300);
     $messages.append($message);
     $messages[0].scrollTop = $messages[0].scrollHeight;
+  }
+  else {
+    $('.chat-private').each(function(index) {
+      if ($(this).data('socket-id') == socketId) {
+        $(this).children('.messages-private').append($message);
+        $(this).children('.messages-private')[0].scrollTop = $(this).children('.messages-private')[0].scrollHeight;
+      }
+    });
   }
 }
 
@@ -113,12 +120,12 @@ function addPrivateChat(data) {
 
 // Create prive chat
 function createPrivateChat(data) {
-  var privateMessagesArea = $('<ul class="messages-private"/>');
+  var privateMessagesArea = $('<ul class="messages-private messages-area"/>');
   var typingUsersArea = $('<ul class="typing-action-private"/>');
   var footerPrivateChat = $('<div class="chat__footer chat__footer--private"/>')
     .append('<input class="input-message-private" placeholder="Type here…"/>', '<button type="button" class="btn-send submit-message-private">Send</button>');
 
-   var $createPrivateChat = $('<section class="chat-private"/>')
+   var $createPrivateChat = $('<section class="chat-private chat-area"/>')
     .data('socket-id', data)
     .append(privateMessagesArea, typingUsersArea, footerPrivateChat);
 

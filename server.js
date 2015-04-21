@@ -56,9 +56,24 @@ io.on('connection', function(socket) {
   });
 
   socket.on('chat message', function(data){
-    if (data.type == 'common-message') {
+    if (data.socket == 'common-message') {
       io.emit('chat message', {
-        type: data.type,
+        type: data.socket,
+        socketId: '',
+        username: socket.username,
+        message: data.message
+      });
+    }
+    else {
+      socket.broadcast.to(data.socket).emit('chat message', {
+        type: data.socket,
+        socketId: socket.id,
+        username: socket.username,
+        message: data.message
+      });
+      socket.emit('chat message', {
+        type: data.socket,
+        socketId: data.socket,
         username: socket.username,
         message: data.message
       });
