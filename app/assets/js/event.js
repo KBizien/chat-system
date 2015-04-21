@@ -14,9 +14,17 @@ $currentInput.click(function() {
 
 // Handler on input - if someone is typing
 
-$('input').on('input', function() {
+$('body').on('input', '.input-message, .input-message-private', function() {
   if ($(this).hasClass('input-message')) {
-    updateTyping();
+    console.log('detect common typing');
+    var socket = 'common-message';
+    updateTyping(socket);
+  }
+  else {
+    console.log('detect private typing');
+    var socket = $currentInput.closest('.chat-private').data('socket-id');
+    console.log(socket);
+    updateTyping(socket);
   }
 });
 

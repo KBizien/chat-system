@@ -81,19 +81,44 @@ io.on('connection', function(socket) {
   });
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function() {
-    usersTyping.push(socket.username);
-    socket.broadcast.emit('typing', {
-      usersTyping: usersTyping
-    });
+  socket.on('typing', function(data) {
+    if (data == 'common-message') {
+      usersTyping.push(socket.username);
+      socket.broadcast.emit('typing', {
+        type: data,
+        usersTyping: usersTyping,
+        socketId: '',
+        id: 'typing'
+      });
+    }
+    else {
+      socket.broadcast.to(data).emit('typing', {
+        type: data,
+        socketId: socket.id,
+        username: socket.username,
+        id: 'typing'
+      });
+    }
   });
 
   // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function() {
-    usersTyping.splice(socket.username);
-    socket.broadcast.emit('stop typing', {
-      usersTyping: usersTyping
-    });
+  socket.on('stop typing', function(data) {
+    if (data == 'common-message') {
+      usersTyping.splice(socket.username);
+      socket.broadcast.emit('stop typing', {
+        type: 'common-message',
+        usersTyping: usersTyping,
+        id: 'stop-typing'
+      });
+    }
+    else {
+      socket.broadcast.emit('stop typing', {
+        type: data,
+        socketId: socket.id,
+        username: socket.username,
+        id: 'stop-typing'
+      });
+    }
   });
 
   // when the user disconnects.. perform this
