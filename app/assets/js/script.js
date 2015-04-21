@@ -261,8 +261,8 @@ function nobodyIsTyping(type, socketId) {
   else {
     $('.chat-private').each(function(index) {
       if ($(this).data('socket-id') == socketId) {
-        $(this).children('.typing-action-private').fadeOut(function(){
-          $(this).empty();
+        $(this).children('.typing-action-private').children('.typing-users').fadeOut(function(){
+          $(this).parent('.typing-action-private').empty();
         });
       }
     });
