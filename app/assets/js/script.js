@@ -156,9 +156,9 @@ function addOnlineUser(data) {
   $onlineUsers
     .append($('<li class="online-users__item"/>')
     .data('socket-id', data.addOnlineUser)
-    .append('<span class="online-users__item--status"></span>' + data.username))
+    .append('<span class="online-users__item--status"></span>' + data.username)
     .hide()
-    .fadeIn(300);
+    .fadeIn(300));
 }
 
 // Remove online user
