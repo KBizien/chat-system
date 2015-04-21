@@ -81,15 +81,18 @@ $('body').on('focusout', 'input', function(){
 
 // handler on icon-users for display online users on mobile
 $('.chat__header .icon-users').click(function() {
-    $('.online-users-mobile').animate({width:'toggle'},400);
+    $('.online-users-mobile').animate({width:'toggle'},250);
 });
 
 $(document).click(function(event) {
   if(!$(event.target).closest('.chat__header .icon-users, .online-users-mobile').length) {
     if($('.online-users-mobile').is(":visible")) {
-      $('.online-users-mobile').animate({width:'toggle'},400);
+      $('.online-users-mobile').animate({width:'toggle'},250);
     }
   }
+});
+$('body').on('click', '.online-users__room, .online-users__item', function(){
+  $('.online-users-mobile').animate({width:'toggle'},250);
 });
 
 // handler for chat links
