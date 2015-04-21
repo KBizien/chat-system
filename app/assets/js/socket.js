@@ -11,7 +11,7 @@
 
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', function(data) {
-    log({message: data.username + ' joined the chat', type: 'common-message'} );
+    log({message: data.username + ' joined the chat', type: 'common-message'});
     addOnlineUser(data);
     addPrivateChat(data);
   });
@@ -32,6 +32,6 @@
 
    // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', function(data) {
-    log(data.username + ' left the chat');
+    log({message: data.username + ' left the chat', type: 'common-message'});
     removeOnlineUser(data);
   });
